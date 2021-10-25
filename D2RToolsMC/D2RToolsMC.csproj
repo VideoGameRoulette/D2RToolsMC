@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Authors>VideoGameRoulette</Authors>
+    <Company>VideoGameRoulette</Company>
+    <Copyright>Copyright © 2021 VideoGameRoulette</Copyright>
+    <Product>D2R Tools</Product>
+    <Description>A plugin tool for Diablo 2 Resurrected</Description>
+    <Version>1.0.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <DebugType>embedded</DebugType>
+    <ApplicationIcon>d2r.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="d2r.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GameOverlay.Net" Version="4.3.1" />
+    <PackageReference Include="SharpDX" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="d2r.ico" />
+  </ItemGroup>
+
+</Project>
