@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:D2RTools"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="800"
+    Width="429"
     Height="450"
     Background="Transparent"
     mc:Ignorable="d">
@@ -46,15 +46,6 @@
                     </Grid.ColumnDefinitions>
 
                     <CheckBox
-                        x:Name="showIP"
-                        Margin="0,0,10,0"
-                        VerticalAlignment="Center"
-                        Checked="checkBox2_Checked"
-                        Content="Show IP"
-                        Foreground="White"
-                        Unchecked="checkBox2_Checked" />
-
-                    <CheckBox
                         x:Name="checkBox2"
                         Grid.Column="1"
                         Margin="0,0,10,0"
@@ -63,15 +54,6 @@
                         Content="Enable Auto Fetch"
                         Foreground="White"
                         Unchecked="checkBox2_Checked" />
-
-                    <CheckBox
-                        x:Name="checkBox1"
-                        Grid.Column="2"
-                        VerticalAlignment="Center"
-                        Checked="checkBox1_Checked"
-                        Content="Enable DirectX Overlay"
-                        Foreground="White"
-                        Unchecked="checkBox1_Checked" />
                 </Grid>
             </StackPanel>
 
@@ -89,110 +71,27 @@
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
                         <RowDefinition Height="2*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel
+                        Grid.Row="0"
+                        Margin="0,0,15,0"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
                         <TextBlock
-                            Width="190"
                             VerticalAlignment="Center"
                             Foreground="White"
-                            Text="DX Overlay Settings"
-                            TextAlignment="Center" />
+                            Text="Settings" />
                     </StackPanel>
 
                     <StackPanel
                         Grid.Row="1"
-                        Margin="0,0,15,0"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="X:" />
-                        <TextBox
-                            x:Name="CustomX"
-                            Width="100"
-                            Height="20"
-                            Text="25" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="2"
-                        Margin="0,0,15,0"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Y:" />
-                        <TextBox
-                            x:Name="CustomY"
-                            Width="100"
-                            Height="20"
-                            Text="100" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="3"
-                        Margin="0,0,15,0"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Font Family:" />
-                        <TextBox
-                            x:Name="CustomFontFamily"
-                            Width="100"
-                            Height="20"
-                            Text="Consolas" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="4"
-                        Margin="0,0,15,0"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Font Size:" />
-                        <TextBox
-                            x:Name="CustomFontSize"
-                            Width="100"
-                            Height="20"
-                            Text="15" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="5"
-                        Margin="0,0,15,0"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="UI Scale:" />
-                        <TextBox
-                            x:Name="CustomScale"
-                            Width="100"
-                            Height="20"
-                            Text="1" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="6"
                         Margin="0,0,15,0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
@@ -208,7 +107,7 @@
                             Text="30" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="7" Orientation="Horizontal">
+                    <StackPanel Grid.Row="3" Orientation="Horizontal">
                         <TextBlock
                             Width="190"
                             VerticalAlignment="Center"
@@ -217,7 +116,7 @@
                             TextAlignment="Center" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="8" Orientation="Horizontal">
+                    <StackPanel Grid.Row="4" Orientation="Horizontal">
                         <TextBlock
                             x:Name="CountdownLabel"
                             Width="190"
@@ -228,7 +127,7 @@
                             TextAlignment="Center" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="9" Orientation="Horizontal">
+                    <StackPanel Grid.Row="5" Orientation="Horizontal">
                         <Button
                             Width="180"
                             Margin="5"
@@ -257,25 +156,20 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
 
                     <TextBox
-                        x:Name="ProcessBar"
-                        Grid.ColumnSpan="2"
-                        Margin="5"
-                        Background="#272537"
-                        Foreground="White"
-                        InputScope="Number"
-                        PreviewTextInput="ProcessBar_PreviewTextInput"
-                        Text="0"
-                        TextChanged="ProcessBar_TextChanged" />
-
-                    <TextBox
                         x:Name="SearchBar"
-                        Grid.Column="2"
-                        Grid.ColumnSpan="2"
+                        Grid.ColumnSpan="4"
                         Margin="5"
                         Background="#272537"
                         Foreground="White"
@@ -284,7 +178,7 @@
                     <Button
                         x:Name="FetchIP"
                         Grid.Row="1"
-                        Grid.ColumnSpan="1"
+                        Grid.ColumnSpan="2"
                         Margin="5"
                         Background="#272537"
                         Click="FetchIP_Click"
@@ -292,20 +186,10 @@
                         Foreground="White" />
 
                     <Button
-                        x:Name="button2"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="2"
-                        Margin="5"
-                        Background="#272537"
-                        Click="CheckedIP_Click"
-                        Content="Add IP To Checklist"
-                        Foreground="White" />
-
-                    <Button
                         x:Name="button1"
                         Grid.Row="1"
-                        Grid.Column="3"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
                         Margin="5"
                         Background="#272537"
                         Click="CopyIP_Click"
@@ -317,23 +201,11 @@
                         Grid.ColumnSpan="2"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Servers Checked: " />
-                        <TextBlock
-                            x:Name="ServersCheckedLabel"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0" />
-                    </StackPanel>
+                        Orientation="Horizontal"/>
 
                     <StackPanel
                         Grid.Row="2"
-                        Grid.Column="2"
-                        Grid.ColumnSpan="2"
+                        Grid.ColumnSpan="4"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
@@ -341,7 +213,7 @@
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Foreground="White"
-                            Text="Current IP: " />
+                            Text="Current IP Client 1: " />
                         <TextBlock
                             x:Name="CurrentIP"
                             VerticalAlignment="Center"
@@ -349,31 +221,130 @@
                             Text="0.0.0.0" />
                     </StackPanel>
 
-                    <ListBox
-                        x:Name="CheckedIPList"
+                    <StackPanel
                         Grid.Row="3"
                         Grid.ColumnSpan="4"
-                        Margin="10,10,10,5"
-                        Background="White" />
-
-                    <Button
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Current IP Client 2: " />
+                        <TextBlock
+                            x:Name="CurrentIP2"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="0.0.0.0" />
+                    </StackPanel>
+                    <StackPanel
                         Grid.Row="4"
-                        Grid.ColumnSpan="2"
-                        Margin="5"
-                        Background="#272537"
-                        Click="RemoveIP_Click"
-                        Content="Remove Selected IP"
-                        Foreground="White" />
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Current IP Client 3: " />
+                        <TextBlock
+                            x:Name="CurrentIP3"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="0.0.0.0" />
+                    </StackPanel>
 
-                    <Button
-                        Grid.Row="4"
-                        Grid.Column="2"
-                        Grid.ColumnSpan="2"
-                        Margin="5"
-                        Background="#272537"
-                        Click="ClearAll_Click"
-                        Content="Clear All"
-                        Foreground="White" />
+                    <StackPanel
+                        Grid.Row="5"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Current IP Client 4: " />
+                        <TextBlock
+                            x:Name="CurrentIP4"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="0.0.0.0" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="6"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Current IP Client 5: " />
+                        <TextBlock
+                            x:Name="CurrentIP5"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="0.0.0.0" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="7"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Current IP Client 6: " />
+                        <TextBlock
+                            x:Name="CurrentIP6"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="0.0.0.0" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="8"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Current IP Client 7: " />
+                        <TextBlock
+                            x:Name="CurrentIP7"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="0.0.0.0" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="9"
+                        Grid.ColumnSpan="9"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Current IP Client 8: " />
+                        <TextBlock
+                            x:Name="CurrentIP8"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="0.0.0.0" />
+                    </StackPanel>
                 </Grid>
             </Border>
 

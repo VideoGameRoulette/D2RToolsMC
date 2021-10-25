@@ -33,18 +33,14 @@ namespace D2RTools
             refreshTimer = new DispatcherTimer();
             refreshTimer.Interval = TimeSpan.FromSeconds(1);
             refreshTimer.Tick += refreshTimer_Tick;
-
-            overlayUpdate = new DispatcherTimer();
-            overlayUpdate.Interval = TimeSpan.FromSeconds(1);
-            overlayUpdate.Tick += overlayUpdate_Tick;
         }
 
         private OverlayWindow _window;
         private Graphics _graphics;
         private WindowRenderTarget _device;
 
-        private Process GetProcess() => ProcessBar.Text != "0" ? Process.GetProcessesByName("d2r")?[ConvertStringToInt(ProcessBar.Text)] : Process.GetProcessesByName("d2r")?.FirstOrDefault();
-        private Process gameProcess;
+        private Process[] GetProcess() => Process.GetProcessesByName("d2r");
+        private Process[] gameProcess;
         private IntPtr gameWindowHandle;
 
         public int currentTime;
@@ -69,133 +65,23 @@ namespace D2RTools
             "137.221.106." // EU
         };
 
-        [STAThread]
-        public int Startup()
-        {
-            gameProcess = GetProcess();
-            if (gameProcess == default)
-                return 1;
-            gameWindowHandle = gameProcess.MainWindowHandle;
-
-            DEVMODE devMode = default;
-            devMode.dmSize = (short)Marshal.SizeOf<DEVMODE>();
-            PInvoke.EnumDisplaySettings(null, -1, ref devMode);
-
-            // Create and initialize the overlay window.
-            _window = new OverlayWindow(0, 0, devMode.dmPelsWidth, devMode.dmPelsHeight);
-            _window?.Create();
-
-            // Create and initialize the graphics object.
-            _graphics = new Graphics()
-            {
-                MeasureFPS = false,
-                PerPrimitiveAntiAliasing = false,
-                TextAntiAliasing = true,
-                UseMultiThreadedFactories = false,
-                VSync = false,
-                Width = _window.Width,
-                Height = _window.Height,
-                WindowHandle = _window.Handle
-            };
-            _graphics?.Setup();
-
-            // Get a refernence to the underlying RenderTarget from SharpDX. This'll be used to draw portions of images.
-            _device = (WindowRenderTarget)typeof(Graphics).GetField("_device", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(_graphics);
-
-            _consolasBold = _graphics?.CreateFont(CustomFontFamily.Text, ConvertStringToInt(CustomFontSize.Text), true);
-
-            _white = _graphics?.CreateSolidBrush(255, 255, 255);
-            _red = _graphics?.CreateSolidBrush(255, 0, 0);
-            _green = _graphics?.CreateSolidBrush(0, 255, 0);
-            _gold = _graphics?.CreateSolidBrush(212, 196, 145);
-
-            _currentBrush = _gold;
-
-            return 0;
-        }
-
-        public int Shutdown()
-        {
-
-            _white?.Dispose();
-            _red?.Dispose();
-            _green?.Dispose();
-            _gold?.Dispose();
-
-            _currentBrush?.Dispose();
-
-            _consolasBold?.Dispose();
-
-            _device = null; // We didn't create this object so we probably shouldn't be the one to dispose of it. Just set the variable to null so the reference isn't held.
-            _graphics?.Dispose(); // This should technically be the one to dispose of the _device object since it was pulled from this instance.
-            _graphics = null;
-            _window?.Dispose();
-            _window = null;
-
-            gameProcess?.Dispose();
-            gameProcess = null;
-
-            return 0;
-        }
-
-        public int ReceiveData()
-        {
-            if (gameProcess.HasExited)
-            {
-                checkBox1.IsChecked = false;
-                return 0;
-            }
-            _window?.PlaceAbove(gameWindowHandle);
-            _window?.FitTo(gameWindowHandle, true);
-
-            try
-            {
-                _graphics?.BeginScene();
-                _graphics?.ClearScene();
-                _device.Transform = new SharpDX.Mathematics.Interop.RawMatrix3x2(ConvertStringToInt(CustomScale.Text), 0f, 0f, ConvertStringToInt(CustomScale.Text), 0f, 0f);
-                DrawOverlay();
-            }
-            catch (Exception ex)
-            {
-                checkBox2.IsChecked = false;
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                _graphics?.EndScene();
-            }
-
-            return 0;
-        }
-
-        private void DrawOverlay()
-        {
-            float xOffset = ConvertStringToInt(CustomX.Text);
-            float yOffset = ConvertStringToInt(CustomY.Text);
-
-            string[] args = CurrentIP.Text.Split('.');
-            if (showIP.IsChecked == true)
-            {
-                DrawTextBlock(ref xOffset, ref yOffset, "IP: ", args.Last(), _currentBrush);
-            }
-            
-            DrawTextBlock(ref xOffset, ref yOffset, "Time: ", CountdownLabel.Text, _gold);
-        }
-
         private float GetStringSize(string str, float size = 20f)
         {
             return (float)_graphics?.MeasureString(_consolasBold, size, str).X;
 
         }
 
-        private void DrawTextBlock(ref float dx, ref float dy, string label, string val, SolidBrush color)
-        {
-            _graphics?.DrawText(_consolasBold, ConvertStringToFloat(CustomFontSize.Text), _gold, dx, dy += 24, label);
-            var dx2 = dx + GetStringSize(label) + 5f;
-            _graphics?.DrawText(_consolasBold, ConvertStringToFloat(CustomFontSize.Text), color, dx2, dy, val); //110f
-        }
+        private string[] ips = { "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0" };
 
         public void GetServerDetails()
+        {
+            if (gameProcess.Length > 0)
+            {
+                for (var i = 0; i < gameProcess.Length; i++) GetClientDetails(i);
+            }
+        }
+
+        public void GetClientDetails(int i)
         {
             try
             {
@@ -243,7 +129,7 @@ namespace D2RTools
                                 !line.Contains(FilteredIP[5]) &&
                                 !line.Contains(FilteredIP[6]) &&
                                 !line.Contains(FilteredIP[7]) &&
-                                line.Contains(gameProcess.Id.ToString()))
+                                line.Contains(gameProcess[i].Id.ToString()))
                             {
                                 IPList.Add(line);
                             }
@@ -253,16 +139,16 @@ namespace D2RTools
                     if (IPList.Count > 0)
                     {
                         string[] currentServerData = Regex.Split(IPList.Last(), ",");
-                        if (CurrentIP.Text != currentServerData.Last())
+                        if (ips[i] != currentServerData.Last())
                         {
-                            CurrentIP.Text = currentServerData.Last();
+                            ips[i] = currentServerData.Last();
                             StartTimer();
                         }
-                        SetTextColor();
+                        UpdateIP();
                     }
                     else if (IPList.Count == 0)
                     {
-                        CurrentIP.Text = "0.0.0.0";
+                        ips[i] = "0.0.0.0";
                     }
                 }
             }
@@ -272,7 +158,27 @@ namespace D2RTools
             }
         }
 
-        private void SetTextColor()
+        private void UpdateIP()
+        {
+            CurrentIP.Text = ips[0];
+            SetTextColor(CurrentIP);
+            CurrentIP2.Text = ips[1];
+            SetTextColor(CurrentIP2);
+            CurrentIP3.Text = ips[2];
+            SetTextColor(CurrentIP3);
+            CurrentIP4.Text = ips[3];
+            SetTextColor(CurrentIP4);
+            CurrentIP5.Text = ips[4];
+            SetTextColor(CurrentIP5);
+            CurrentIP6.Text = ips[5];
+            SetTextColor(CurrentIP6);
+            CurrentIP7.Text = ips[6];
+            SetTextColor(CurrentIP7);
+            CurrentIP8.Text = ips[7];
+            SetTextColor(CurrentIP8);
+        }
+
+        private void SetTextColor(System.Windows.Controls.TextBlock tb)
         {
             string[] args = SearchBar.Text.Split(',');
             if (args.Length > 1)
@@ -281,13 +187,13 @@ namespace D2RTools
                 {
                     if (i == args.Length)
                     {
-                        CurrentIP.Foreground = Brushes.Red;
+                        tb.Foreground = Brushes.Red;
                         _currentBrush = _red;
                         return;
                     }
-                    if (args[i] == CurrentIP.Text)
+                    if (args[i] == tb.Text)
                     {
-                        CurrentIP.Foreground = Brushes.Green;
+                        tb.Foreground = Brushes.Green;
                         _currentBrush = _green;
                         return;
                     }
@@ -298,20 +204,17 @@ namespace D2RTools
             {
                 if (SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && SearchBar.Text == CurrentIP.Text)
                 {
-                    CurrentIP.Foreground = Brushes.Green;
-                    _currentBrush = _green;
+                    tb.Foreground = Brushes.Green;
                     return;
                 }
-                else if (CheckedIPList.Items.Contains(CurrentIP.Text) || SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && SearchBar.Text != CurrentIP.Text)
+                else if (SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && SearchBar.Text != CurrentIP.Text)
                 {
-                    CurrentIP.Foreground = Brushes.Red;
-                    _currentBrush = _red;
+                    tb.Foreground = Brushes.Red;
                     return;
                 }
                 else
                 {
-                    CurrentIP.Foreground = Brushes.White;
-                    _currentBrush = _gold;
+                    tb.Foreground = Brushes.White;
                     return;
                 }
             }
@@ -326,30 +229,6 @@ namespace D2RTools
         private void CopyIP_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(CurrentIP.Text);
-        }
-
-        private void CheckedIP_Click(object sender, EventArgs e)
-        {
-            if (!CheckedIPList.Items.Contains(CurrentIP.Text))
-            {
-                CheckedIPList.Items.Add(CurrentIP.Text);
-                SetCount(CheckedIPList.Items.Count);
-                SetTextColor();
-            }
-        }
-
-        private void ClearAll_Click(object sender, EventArgs e)
-        {
-            CheckedIPList.Items.Clear();
-        }
-
-        private void RemoveIP_Click(object sender, EventArgs e)
-        {
-            if (CheckedIPList.SelectedIndex != -1)
-            {
-                CheckedIPList.Items.RemoveAt(CheckedIPList.SelectedIndex);
-                SetTextColor();
-            }
         }
 
         private void StartTimer()
@@ -378,19 +257,9 @@ namespace D2RTools
             CountdownLabel.Text = string.Format("{0}", i);
         }
 
-        private void SetCount(int i)
-        {
-            ServersCheckedLabel.Text = string.Format("Servers Checked: {0}", i);
-        }
-
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
             GetServerDetails();
-        }
-
-        private void overlayUpdate_Tick(object sender, EventArgs e)
-        {
-            ReceiveData();
         }
 
         private void RestartTimer_Click(object sender, EventArgs e)
@@ -402,20 +271,6 @@ namespace D2RTools
         {
             if (checkBox2.IsChecked == true) refreshTimer.Start();
             else refreshTimer.Stop();
-        }
-
-        private void checkBox1_Checked(object sender, RoutedEventArgs e)
-        {
-            if (checkBox1.IsChecked == true)
-            {
-                Startup();
-                overlayUpdate.Start();
-            }
-            else
-            {
-                Shutdown();
-                overlayUpdate.Stop();
-            }
         }
 
         private int ConvertStringToInt(string s)
@@ -434,23 +289,5 @@ namespace D2RTools
             return 0f;
         }
 
-        private void ProcessBar_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
-        {
-            Regex r = new Regex("[^0-9]+");
-            e.Handled = r.IsMatch(e.Text);
-        }
-
-        private void ProcessBar_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            string s = ProcessBar.Text;
-            string s2 = s.TrimStart('0');
-            int i = ConvertStringToInt(s2);
-            Process[] p = Process.GetProcessesByName("d2r");
-            int l = p.Length - 1;
-            if (i > p.Length)
-            {
-                ProcessBar.Text = l == -1 ? "0" : l.ToString();
-            }
-        }
     }
 }
