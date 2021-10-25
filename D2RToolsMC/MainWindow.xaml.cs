@@ -1,12 +1,8 @@
-﻿using GameOverlay.Drawing;
-using GameOverlay.Windows;
-using SharpDX.Direct2D1;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
@@ -21,7 +17,6 @@ namespace D2RTools
     {
         private DispatcherTimer countdownTimer;
         private DispatcherTimer refreshTimer;
-        private DispatcherTimer overlayUpdate;
 
         public MainWindow()
         {
@@ -35,24 +30,10 @@ namespace D2RTools
             refreshTimer.Tick += refreshTimer_Tick;
         }
 
-        private OverlayWindow _window;
-        private Graphics _graphics;
-        private WindowRenderTarget _device;
-
         private Process[] GetProcess() => Process.GetProcessesByName("d2r");
         private Process[] gameProcess;
-        private IntPtr gameWindowHandle;
 
         public int currentTime;
-
-        private Font _consolasBold;
-
-        private SolidBrush _white;
-        private SolidBrush _red;
-        private SolidBrush _green;
-        private SolidBrush _gold;
-
-        private SolidBrush _currentBrush;
 
         private string[] FilteredIP = {
             "24.105.29.76", // GLOBAL??
@@ -65,16 +46,11 @@ namespace D2RTools
             "137.221.106." // EU
         };
 
-        private float GetStringSize(string str, float size = 20f)
-        {
-            return (float)_graphics?.MeasureString(_consolasBold, size, str).X;
-
-        }
-
         private string[] ips = { "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0" };
 
         public void GetServerDetails()
         {
+            if (gameProcess == default) gameProcess = GetProcess();
             if (gameProcess.Length > 0)
             {
                 for (var i = 0; i < gameProcess.Length; i++) GetClientDetails(i);
@@ -188,13 +164,11 @@ namespace D2RTools
                     if (i == args.Length)
                     {
                         tb.Foreground = Brushes.Red;
-                        _currentBrush = _red;
                         return;
                     }
                     if (args[i] == tb.Text)
                     {
                         tb.Foreground = Brushes.Green;
-                        _currentBrush = _green;
                         return;
                     }
                 }
@@ -279,14 +253,6 @@ namespace D2RTools
             var result = int.TryParse(s, out i);
             if (result) return i;
             return 0;
-        }
-
-        private float ConvertStringToFloat(string s)
-        {
-            float i = 0;
-            var result = float.TryParse(s, out i);
-            if (result) return i;
-            return 0f;
         }
 
     }
