@@ -15,15 +15,47 @@ namespace D2RTools
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DispatcherTimer countdownTimer;
+        private DispatcherTimer[] countdownTimer;
         private DispatcherTimer refreshTimer;
 
         public MainWindow()
         {
             InitializeComponent();
-            countdownTimer = new DispatcherTimer();
-            countdownTimer.Interval = TimeSpan.FromSeconds(1);
-            countdownTimer.Tick += countdownTimer_Tick;
+            countdownTimer = new DispatcherTimer[8];
+            var i = 0;
+            foreach (DispatcherTimer dt in countdownTimer)
+            {
+                i++;
+                dt.Interval = TimeSpan.FromSeconds(1);
+                switch(i)
+                {
+                    case 1:
+                        dt.Tick += countdownTimer_Tick;
+                        break;
+                    case 2:
+                        dt.Tick += countdownTimer2_Tick;
+                        break;
+                    case 3:
+                        dt.Tick += countdownTimer3_Tick;
+                        break;
+                    case 4:
+                        dt.Tick += countdownTimer4_Tick;
+                        break;
+                    case 5:
+                        dt.Tick += countdownTimer5_Tick;
+                        break;
+                    case 6:
+                        dt.Tick += countdownTimer6_Tick;
+                        break;
+                    case 7:
+                        dt.Tick += countdownTimer7_Tick;
+                        break;
+                    case 8:
+                        dt.Tick += countdownTimer8_Tick;
+                        break;
+                }
+                
+            }
 
             refreshTimer = new DispatcherTimer();
             refreshTimer.Interval = TimeSpan.FromSeconds(1);
@@ -33,7 +65,7 @@ namespace D2RTools
         private Process[] GetProcess() => Process.GetProcessesByName("d2r");
         private Process[] gameProcess;
 
-        public int currentTime;
+        //public int currentTime;
 
         private string[] FilteredIP = {
             "24.105.29.76", // GLOBAL??
@@ -48,12 +80,49 @@ namespace D2RTools
 
         private string[] ips = { "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0" };
 
+        private int[] currentTime = { 30, 30, 30, 30, 30, 30, 30, 30 };
+
         public void GetServerDetails()
         {
             if (gameProcess == default) gameProcess = GetProcess();
             if (gameProcess.Length > 0)
             {
-                for (var i = 0; i < gameProcess.Length; i++) GetClientDetails(i);
+                for (var i = 0; i < gameProcess.Length; i++)
+                {
+                    SetTitle(i);
+                    GetClientDetails(i);
+                }
+            }
+        }
+
+        public void SetTitle(int i)
+        {
+            switch(i)
+            {
+                case 1:
+                    ClientName2.Text = gameProcess[i].MainWindowTitle;
+                    return;
+                case 2:
+                    ClientName3.Text = gameProcess[i].MainWindowTitle;
+                    return;
+                case 3:
+                    ClientName4.Text = gameProcess[i].MainWindowTitle;
+                    return;
+                case 4:
+                    ClientName5.Text = gameProcess[i].MainWindowTitle;
+                    return;
+                case 5:
+                    ClientName6.Text = gameProcess[i].MainWindowTitle;
+                    return;
+                case 6:
+                    ClientName7.Text = gameProcess[i].MainWindowTitle;
+                    return;
+                case 7:
+                    ClientName8.Text = gameProcess[i].MainWindowTitle;
+                    return;
+                default:
+                    ClientName1.Text = gameProcess[i].MainWindowTitle;
+                    return;
             }
         }
 
@@ -118,7 +187,7 @@ namespace D2RTools
                         if (ips[i] != currentServerData.Last())
                         {
                             ips[i] = currentServerData.Last();
-                            StartTimer();
+                            StartTimer(i);
                         }
                         UpdateIP();
                     }
@@ -137,42 +206,38 @@ namespace D2RTools
         private void UpdateIP()
         {
             CurrentIP.Text = ips[0];
-            SetTextColor(CurrentIP);
+            SetTextColor(0, CurrentIP);
             CurrentIP2.Text = ips[1];
-            SetTextColor(CurrentIP2);
+            SetTextColor(1, CurrentIP2);
             CurrentIP3.Text = ips[2];
-            SetTextColor(CurrentIP3);
+            SetTextColor(2, CurrentIP3);
             CurrentIP4.Text = ips[3];
-            SetTextColor(CurrentIP4);
+            SetTextColor(3, CurrentIP4);
             CurrentIP5.Text = ips[4];
-            SetTextColor(CurrentIP5);
+            SetTextColor(4, CurrentIP5);
             CurrentIP6.Text = ips[5];
-            SetTextColor(CurrentIP6);
+            SetTextColor(5, CurrentIP6);
             CurrentIP7.Text = ips[6];
-            SetTextColor(CurrentIP7);
+            SetTextColor(6, CurrentIP7);
             CurrentIP8.Text = ips[7];
-            SetTextColor(CurrentIP8);
+            SetTextColor(7, CurrentIP8);
         }
 
-        private void SetTextColor(System.Windows.Controls.TextBlock tb)
+        private void SetTextColor(int i, System.Windows.Controls.TextBlock tb)
         {
             string[] args = SearchBar.Text.Split(',');
             if (args.Length > 1)
             {
-                for (var i = 0; i == args.Length; i++)
+                if (i == args.Length)
                 {
-                    if (i == args.Length)
-                    {
-                        tb.Foreground = Brushes.Red;
-                        return;
-                    }
-                    if (args[i] == tb.Text)
-                    {
-                        tb.Foreground = Brushes.Green;
-                        return;
-                    }
+                    tb.Foreground = Brushes.Red;
+                    return;
                 }
-
+                if (args[i] == tb.Text)
+                {
+                    tb.Foreground = Brushes.Green;
+                    return;
+                }
             }
             else
             {
@@ -195,50 +260,9 @@ namespace D2RTools
             
         }
 
-        private void FetchIP_Click(object sender, EventArgs e)
-        {
-            GetServerDetails();
-        }
-
-        private void CopyIP_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(CurrentIP.Text);
-        }
-
-        private void StartTimer()
-        {
-            currentTime = ConvertStringToInt(CustomCooldown.Text);
-            SetTime(currentTime);
-            countdownTimer.Start();
-        }
-
-        private void countdownTimer_Tick(object sender, EventArgs e)
-        {
-            if (currentTime > 0)
-            {
-                currentTime -= 1;
-                SetTime(currentTime);
-            }
-            else
-            {
-                SetTime(0);
-                countdownTimer.Stop();
-            }
-        }
-
-        private void SetTime(int i)
-        {
-            CountdownLabel.Text = string.Format("{0}", i);
-        }
-
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
             GetServerDetails();
-        }
-
-        private void RestartTimer_Click(object sender, EventArgs e)
-        {
-            StartTimer();
         }
 
         private void checkBox2_Checked(object sender, RoutedEventArgs e)
@@ -255,5 +279,235 @@ namespace D2RTools
             return 0;
         }
 
+        private void countdownTimer_Tick(object sender, EventArgs e)
+        {
+            if (currentTime[0] > 0)
+            {
+                currentTime[0] -= 1;
+                SetTime(currentTime[0], CountdownLabel);
+            }
+            else
+            {
+                SetTime(0, CountdownLabel);
+                countdownTimer[0].Stop();
+            }
+        }
+
+        private void countdownTimer2_Tick(object sender, EventArgs e)
+        {
+            if (currentTime[1] > 0)
+            {
+                currentTime[1] -= 1;
+                SetTime(currentTime[1], CountdownLabel2);
+            }
+            else
+            {
+                SetTime(0, CountdownLabel2);
+                countdownTimer[1].Stop();
+            }
+        }
+
+        private void countdownTimer3_Tick(object sender, EventArgs e)
+        {
+            if (currentTime[2] > 0)
+            {
+                currentTime[2] -= 1;
+                SetTime(currentTime[2], CountdownLabel3);
+            }
+            else
+            {
+                SetTime(0, CountdownLabel3);
+                countdownTimer[2].Stop();
+            }
+        }
+
+        private void countdownTimer4_Tick(object sender, EventArgs e)
+        {
+            if (currentTime[3] > 0)
+            {
+                currentTime[3] -= 1;
+                SetTime(currentTime[3], CountdownLabel4);
+            }
+            else
+            {
+                SetTime(0, CountdownLabel4);
+                countdownTimer[3].Stop();
+            }
+        }
+
+        private void countdownTimer5_Tick(object sender, EventArgs e)
+        {
+            if (currentTime[4] > 0)
+            {
+                currentTime[4] -= 1;
+                SetTime(currentTime[4], CountdownLabel5);
+            }
+            else
+            {
+                SetTime(0, CountdownLabel5);
+                countdownTimer[4].Stop();
+            }
+        }
+
+        private void countdownTimer6_Tick(object sender, EventArgs e)
+        {
+            if (currentTime[5] > 0)
+            {
+                currentTime[5] -= 1;
+                SetTime(currentTime[5], CountdownLabel6);
+            }
+            else
+            {
+                SetTime(0, CountdownLabel6);
+                countdownTimer[5].Stop();
+            }
+        }
+
+        private void countdownTimer7_Tick(object sender, EventArgs e)
+        {
+            if (currentTime[6] > 0)
+            {
+                currentTime[6] -= 1;
+                SetTime(currentTime[6], CountdownLabel7);
+            }
+            else
+            {
+                SetTime(0, CountdownLabel7);
+                countdownTimer[6].Stop();
+            }
+        }
+
+        private void countdownTimer8_Tick(object sender, EventArgs e)
+        {
+            if (currentTime[7] > 0)
+            {
+                currentTime[7] -= 1;
+                SetTime(currentTime[7], CountdownLabel8);
+            }
+            else
+            {
+                SetTime(0, CountdownLabel8);
+                countdownTimer[7].Stop();
+            }
+        }
+
+        private void StartTimer(int i)
+        {
+            currentTime[i] = ConvertStringToInt(CustomCooldown.Text);
+            
+            switch (i)
+            {
+                case 1:
+                    SetTime(currentTime[i], CountdownLabel);
+                    break;
+                case 2:
+                    SetTime(currentTime[i], CountdownLabel2);
+                    break;
+                case 3:
+                    SetTime(currentTime[i], CountdownLabel3);
+                    break;
+                case 4:
+                    SetTime(currentTime[i], CountdownLabel4);
+                    break;
+                case 5:
+                    SetTime(currentTime[i], CountdownLabel5);
+                    break;
+                case 6:
+                    SetTime(currentTime[i], CountdownLabel6);
+                    break;
+                case 7:
+                    SetTime(currentTime[i], CountdownLabel7);
+                    break;
+                default:
+                    SetTime(currentTime[i], CountdownLabel8);
+                    break;
+            }
+            countdownTimer[i].Start();
+        }
+
+        private void SetTime(int i, System.Windows.Controls.TextBlock tb)
+        {
+            tb.Text = string.Format("{0}", i);
+        }
+
+        private void RestartTimer_Click(object sender, EventArgs e)
+        {
+            StartTimer(0);
+        }
+
+        private void RestartTimer2_Click(object sender, RoutedEventArgs e)
+        {
+            StartTimer(1);
+        }
+
+        private void RestartTimer3_Click(object sender, RoutedEventArgs e)
+        {
+            StartTimer(2);
+        }
+
+        private void RestartTimer4_Click(object sender, RoutedEventArgs e)
+        {
+            StartTimer(3);
+        }
+
+        private void RestartTimer5_Click(object sender, RoutedEventArgs e)
+        {
+            StartTimer(4);
+        }
+
+        private void RestartTimer6_Click(object sender, RoutedEventArgs e)
+        {
+            StartTimer(5);
+        }
+
+        private void RestartTimer7_Click(object sender, RoutedEventArgs e)
+        {
+            StartTimer(6);
+        }
+
+        private void RestartTimer8_Click(object sender, RoutedEventArgs e)
+        {
+            StartTimer(7);
+        }
+
+        private void CopyIP1_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(CurrentIP.Text);
+        }
+
+        private void CopyIP2_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(CurrentIP2.Text);
+        }
+
+        private void CopyIP3_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(CurrentIP3.Text);
+        }
+
+        private void CopyIP4_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(CurrentIP4.Text);
+        }
+
+        private void CopyIP5_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(CurrentIP5.Text);
+        }
+
+        private void CopyIP6_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(CurrentIP6.Text);
+        }
+
+        private void CopyIP7_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(CurrentIP7.Text);
+        }
+
+        private void CopyIP8_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(CurrentIP8.Text);
+        }
     }
 }

@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <None Remove="d2r.ico" />
+    <None Remove="Images\copy.png" />
+    <None Remove="Images\refresh.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +29,8 @@
 
   <ItemGroup>
     <Resource Include="d2r.ico" />
+    <Resource Include="Images\copy.png" />
+    <Resource Include="Images\refresh.png" />
   </ItemGroup>
 
 </Project>

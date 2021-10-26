@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:D2RTools"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="429"
+    Width="695"
     Height="450"
     Background="Transparent"
     mc:Ignorable="d">
@@ -107,35 +107,9 @@
                             Text="30" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="3" Orientation="Horizontal">
-                        <TextBlock
-                            Width="190"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Last Game Creation Timer"
-                            TextAlignment="Center" />
-                    </StackPanel>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" />
 
-                    <StackPanel Grid.Row="4" Orientation="Horizontal">
-                        <TextBlock
-                            x:Name="CountdownLabel"
-                            Width="190"
-                            VerticalAlignment="Center"
-                            FontSize="50"
-                            Foreground="White"
-                            Text="30"
-                            TextAlignment="Center" />
-                    </StackPanel>
-
-                    <StackPanel Grid.Row="5" Orientation="Horizontal">
-                        <Button
-                            Width="180"
-                            Margin="5"
-                            Background="#272537"
-                            Click="RestartTimer_Click"
-                            Content="Restart Timer"
-                            Foreground="White" />
-                    </StackPanel>
+                    <StackPanel Grid.Row="5" Orientation="Horizontal" />
                 </Grid>
             </Border>
 
@@ -149,8 +123,9 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="30" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30" />
@@ -162,189 +137,424 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
                         <RowDefinition Height="1*" />
-                        <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
 
                     <TextBox
                         x:Name="SearchBar"
-                        Grid.ColumnSpan="4"
+                        Grid.ColumnSpan="5"
                         Margin="5"
                         Background="#272537"
                         Foreground="White"
                         Text="0.0.0.0" />
 
-                    <Button
-                        x:Name="FetchIP"
+                    <TextBlock
+                        x:Name="ClientName1"
                         Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        Margin="5"
-                        Background="#272537"
-                        Click="FetchIP_Click"
-                        Content="Fetch IP"
-                        Foreground="White" />
-
-                    <Button
-                        x:Name="button1"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="Current IP Client 1: "
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CurrentIP"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="0.0.0.0"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CountdownLabel"
                         Grid.Row="1"
                         Grid.Column="2"
-                        Grid.ColumnSpan="2"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="30"
+                        TextAlignment="Center" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="3"
                         Margin="5"
                         Background="#272537"
-                        Click="CopyIP_Click"
-                        Content="Copy IP"
-                        Foreground="White" />
+                        Click="RestartTimer_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/refresh.png" />
+                    </Button>
+                    <Button
+                        x:Name="CopyIP1"
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="5"
+                        Background="#272537"
+                        Click="CopyIP1_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/copy.png" />
+                    </Button>
 
-                    <StackPanel
+                    <TextBlock
+                        x:Name="ClientName2"
                         Grid.Row="2"
-                        Grid.ColumnSpan="2"
-                        HorizontalAlignment="Center"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal"/>
-
-                    <StackPanel
+                        Foreground="White"
+                        Text="Current IP Client 2: "
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CurrentIP2"
                         Grid.Row="2"
-                        Grid.ColumnSpan="4"
-                        HorizontalAlignment="Center"
+                        Grid.Column="1"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Current IP Client 1: " />
-                        <TextBlock
-                            x:Name="CurrentIP"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0.0.0.0" />
-                    </StackPanel>
+                        Foreground="White"
+                        Text="0.0.0.0"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CountdownLabel2"
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="30"
+                        TextAlignment="Center" />
+                    <Button
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Margin="5"
+                        Background="#272537"
+                        Click="RestartTimer2_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/refresh.png" />
+                    </Button>
+                    <Button
+                        x:Name="CopyIP2"
+                        Grid.Row="2"
+                        Grid.Column="4"
+                        Margin="5"
+                        Background="#272537"
+                        Click="CopyIP2_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/copy.png" />
+                    </Button>
 
-                    <StackPanel
+                    <TextBlock
+                        x:Name="ClientName3"
                         Grid.Row="3"
-                        Grid.ColumnSpan="4"
-                        HorizontalAlignment="Center"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Current IP Client 2: " />
-                        <TextBlock
-                            x:Name="CurrentIP2"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0.0.0.0" />
-                    </StackPanel>
-                    <StackPanel
+                        Foreground="White"
+                        Text="Current IP Client 3: "
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CurrentIP3"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="0.0.0.0"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CountdownLabel3"
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="30"
+                        TextAlignment="Center" />
+                    <Button
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Margin="5"
+                        Background="#272537"
+                        Click="RestartTimer3_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/refresh.png" />
+                    </Button>
+                    <Button
+                        x:Name="CopyIP3"
+                        Grid.Row="3"
+                        Grid.Column="4"
+                        Margin="5"
+                        Background="#272537"
+                        Click="CopyIP3_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/copy.png" />
+                    </Button>
+
+                    <TextBlock
+                        x:Name="ClientName4"
                         Grid.Row="4"
-                        Grid.ColumnSpan="4"
-                        HorizontalAlignment="Center"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Current IP Client 3: " />
-                        <TextBlock
-                            x:Name="CurrentIP3"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0.0.0.0" />
-                    </StackPanel>
+                        Foreground="White"
+                        Text="Current IP Client 4: "
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CurrentIP4"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="0.0.0.0"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CountdownLabel4"
+                        Grid.Row="4"
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="30"
+                        TextAlignment="Center" />
+                    <Button
+                        Grid.Row="4"
+                        Grid.Column="3"
+                        Margin="5"
+                        Background="#272537"
+                        Click="RestartTimer4_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/refresh.png" />
+                    </Button>
+                    <Button
+                        x:Name="CopyIP4"
+                        Grid.Row="4"
+                        Grid.Column="4"
+                        Margin="5"
+                        Background="#272537"
+                        Click="CopyIP4_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/copy.png" />
+                    </Button>
 
-                    <StackPanel
+                    <TextBlock
+                        x:Name="ClientName5"
                         Grid.Row="5"
-                        Grid.ColumnSpan="4"
-                        HorizontalAlignment="Center"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Current IP Client 4: " />
-                        <TextBlock
-                            x:Name="CurrentIP4"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0.0.0.0" />
-                    </StackPanel>
+                        Foreground="White"
+                        Text="Current IP Client 5: "
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CurrentIP5"
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="0.0.0.0"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CountdownLabel5"
+                        Grid.Row="5"
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="30"
+                        TextAlignment="Center" />
+                    <Button
+                        Grid.Row="5"
+                        Grid.Column="3"
+                        Margin="5"
+                        Background="#272537"
+                        Click="RestartTimer5_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/refresh.png" />
+                    </Button>
+                    <Button
+                        x:Name="CopyIP5"
+                        Grid.Row="5"
+                        Grid.Column="4"
+                        Margin="5"
+                        Background="#272537"
+                        Click="CopyIP5_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/copy.png" />
+                    </Button>
 
-                    <StackPanel
+                    <TextBlock
+                        x:Name="ClientName6"
                         Grid.Row="6"
-                        Grid.ColumnSpan="4"
-                        HorizontalAlignment="Center"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Current IP Client 5: " />
-                        <TextBlock
-                            x:Name="CurrentIP5"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0.0.0.0" />
-                    </StackPanel>
+                        Foreground="White"
+                        Text="Current IP Client 6: "
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CurrentIP6"
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="0.0.0.0"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CountdownLabel6"
+                        Grid.Row="6"
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="30"
+                        TextAlignment="Center" />
+                    <Button
+                        Grid.Row="6"
+                        Grid.Column="3"
+                        Margin="5"
+                        Background="#272537"
+                        Click="RestartTimer6_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/refresh.png" />
+                    </Button>
+                    <Button
+                        x:Name="CopyIP6"
+                        Grid.Row="6"
+                        Grid.Column="4"
+                        Margin="5"
+                        Background="#272537"
+                        Click="CopyIP6_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/copy.png" />
+                    </Button>
 
-                    <StackPanel
+                    <TextBlock
+                        x:Name="ClientName7"
                         Grid.Row="7"
-                        Grid.ColumnSpan="4"
-                        HorizontalAlignment="Center"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Current IP Client 6: " />
-                        <TextBlock
-                            x:Name="CurrentIP6"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0.0.0.0" />
-                    </StackPanel>
+                        Foreground="White"
+                        Text="Current IP Client 7: "
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CurrentIP7"
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="0.0.0.0"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CountdownLabel7"
+                        Grid.Row="7"
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="30"
+                        TextAlignment="Center" />
+                    <Button
+                        Grid.Row="7"
+                        Grid.Column="3"
+                        Margin="5"
+                        Background="#272537"
+                        Click="RestartTimer7_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/refresh.png" />
+                    </Button>
+                    <Button
+                        x:Name="CopyIP7"
+                        Grid.Row="7"
+                        Grid.Column="4"
+                        Margin="5"
+                        Background="#272537"
+                        Click="CopyIP7_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/copy.png" />
+                    </Button>
 
-                    <StackPanel
+                    <TextBlock
+                        x:Name="ClientName8"
                         Grid.Row="8"
-                        Grid.ColumnSpan="4"
-                        HorizontalAlignment="Center"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Current IP Client 7: " />
-                        <TextBlock
-                            x:Name="CurrentIP7"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0.0.0.0" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="9"
-                        Grid.ColumnSpan="9"
-                        HorizontalAlignment="Center"
+                        Foreground="White"
+                        Text="Current IP Client 8: "
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CurrentIP8"
+                        Grid.Row="8"
+                        Grid.Column="1"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="Current IP Client 8: " />
-                        <TextBlock
-                            x:Name="CurrentIP8"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0.0.0.0" />
-                    </StackPanel>
+                        Foreground="White"
+                        Text="0.0.0.0"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="CountdownLabel8"
+                        Grid.Row="8"
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="30"
+                        TextAlignment="Center" />
+                    <Button
+                        Grid.Row="8"
+                        Grid.Column="3"
+                        Margin="5"
+                        Background="#272537"
+                        Click="RestartTimer8_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/refresh.png" />
+                    </Button>
+                    <Button
+                        x:Name="CopyIP8"
+                        Grid.Row="8"
+                        Grid.Column="4"
+                        Margin="5"
+                        Background="#272537"
+                        Click="CopyIP8_Click"
+                        Foreground="White">
+                        <Image
+                            Width="15"
+                            Margin="2"
+                            Source="Images/copy.png" />
+                    </Button>
                 </Grid>
             </Border>
 
