@@ -22,6 +22,8 @@ namespace D2RTools
         {
             InitializeComponent();
             countdownTimer = new DispatcherTimer[8];
+            for (var idx = 0; idx < countdownTimer.Length; idx++) countdownTimer[idx] = new DispatcherTimer();
+
             var i = 0;
             foreach (DispatcherTimer dt in countdownTimer)
             {
