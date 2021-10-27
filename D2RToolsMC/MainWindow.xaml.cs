@@ -132,28 +132,28 @@ namespace D2RTools
             switch(i)
             {
                 case 1:
-                    ClientName2.Text = gameProcess[i].MainWindowTitle;
+                    ClientName2.Text = gameProcess[i].HasExited ? string.Format("Current IP Client {0}", i) : gameProcess[i].MainWindowTitle;
                     return;
                 case 2:
-                    ClientName3.Text = gameProcess[i].MainWindowTitle;
+                    ClientName3.Text = gameProcess[i].HasExited ? string.Format("Current IP Client {0}", i) : gameProcess[i].MainWindowTitle;
                     return;
                 case 3:
-                    ClientName4.Text = gameProcess[i].MainWindowTitle;
+                    ClientName4.Text = gameProcess[i].HasExited ? string.Format("Current IP Client {0}", i) : gameProcess[i].MainWindowTitle;
                     return;
                 case 4:
-                    ClientName5.Text = gameProcess[i].MainWindowTitle;
+                    ClientName5.Text = gameProcess[i].HasExited ? string.Format("Current IP Client {0}", i) : gameProcess[i].MainWindowTitle;
                     return;
                 case 5:
-                    ClientName6.Text = gameProcess[i].MainWindowTitle;
+                    ClientName6.Text = gameProcess[i].HasExited ? string.Format("Current IP Client {0}", i) : gameProcess[i].MainWindowTitle;
                     return;
                 case 6:
-                    ClientName7.Text = gameProcess[i].MainWindowTitle;
+                    ClientName7.Text = gameProcess[i].HasExited ? string.Format("Current IP Client {0}", i) : gameProcess[i].MainWindowTitle;
                     return;
                 case 7:
-                    ClientName8.Text = gameProcess[i].MainWindowTitle;
+                    ClientName8.Text = gameProcess[i].HasExited ? string.Format("Current IP Client {0}", i) : gameProcess[i].MainWindowTitle;
                     return;
                 default:
-                    ClientName1.Text = gameProcess[i].MainWindowTitle;
+                    ClientName1.Text = gameProcess[i].HasExited ? string.Format("Current IP Client {0}", i) : gameProcess[i].MainWindowTitle;
                     return;
             }
         }
