@@ -89,7 +89,7 @@ namespace D2RTools
 
         public void GetServerDetails()
         {
-            if (gameProcess == default || processCount != GetProcess().Length)
+            if (gameProcess == default)
             {
                 gameProcess = GetProcess();
                 processCount = gameProcess.Length;
