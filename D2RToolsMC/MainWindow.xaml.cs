@@ -66,6 +66,7 @@ namespace D2RTools
 
         private Process[] GetProcess() => Process.GetProcessesByName("d2r");
         private Process[] gameProcess;
+        private int processCount = 0;
 
         private List<string> CurrentIPs = new List<string>();
 
@@ -88,14 +89,54 @@ namespace D2RTools
 
         public void GetServerDetails()
         {
-            if (gameProcess == default) gameProcess = GetProcess();
-            if (gameProcess.Length > 0)
+            if (gameProcess == default || processCount != GetProcess().Length)
             {
-                for (var i = 0; i < gameProcess.Length; i++)
+                gameProcess = GetProcess();
+                processCount = gameProcess.Length;
+            }
+            for (var i = 0; i < 8; i++)
+            {
+                if (i > processCount)
+                {
+                    SetDefaultTitle(i);
+                    ips[i] = "0.0.0.0";
+                }
+                else
                 {
                     SetTitle(i);
                     GetClientDetails(i);
                 }
+            }
+        }
+
+        public void SetDefaultTitle(int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    ClientName2.Text = string.Format("Client {0}:", i);
+                    return;
+                case 2:
+                    ClientName3.Text = string.Format("Client {0}:", i);
+                    return;
+                case 3:
+                    ClientName4.Text = string.Format("Client {0}:", i);
+                    return;
+                case 4:
+                    ClientName5.Text = string.Format("Client {0}:", i);
+                    return;
+                case 5:
+                    ClientName6.Text = string.Format("Client {0}:", i);
+                    return;
+                case 6:
+                    ClientName7.Text = string.Format("Client {0}:", i);
+                    return;
+                case 7:
+                    ClientName8.Text = string.Format("Client {0}:", i);
+                    return;
+                default:
+                    ClientName1.Text = string.Format("Client {0}:", i);
+                    return;
             }
         }
 
@@ -193,12 +234,12 @@ namespace D2RTools
                             ips[i] = currentServerData.Last();
                             StartTimer(i);
                         }
-                        UpdateIP();
                     }
                     else if (IPList.Count == 0)
                     {
                         ips[i] = "0.0.0.0";
                     }
+                    UpdateIP();
                 }
             }
             catch (Exception ex)
