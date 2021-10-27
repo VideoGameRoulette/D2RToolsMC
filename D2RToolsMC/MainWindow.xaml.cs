@@ -67,6 +67,8 @@ namespace D2RTools
         private Process[] GetProcess() => Process.GetProcessesByName("d2r");
         private Process[] gameProcess;
 
+        private List<string> CurrentIPs = new List<string>();
+
         //public int currentTime;
 
         private string[] FilteredIP = {
@@ -227,19 +229,20 @@ namespace D2RTools
 
         private void SetTextColor(int i, System.Windows.Controls.TextBlock tb)
         {
+            CurrentIPs.Clear();
             string[] args = SearchBar.Text.Split(',');
-            for (var idx = 0; idx == args.Length; idx++)
+
+            foreach (string arg in args) CurrentIPs.Add(arg);
+
+            if (CurrentIPs.Contains(tb.Text))
             {
-                if (idx == args.Length)
-                {
-                    tb.Foreground = Brushes.Red;
-                    return;
-                }
-                if (args[idx] == tb.Text)
-                {
-                    tb.Foreground = Brushes.Green;
-                    continue;
-                }
+                tb.Foreground = Brushes.Green;
+                return;
+            }
+            else
+            {
+                tb.Foreground = Brushes.Red;
+                return;
             }
         }
 
