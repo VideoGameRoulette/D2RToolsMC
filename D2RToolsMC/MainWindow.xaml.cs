@@ -89,23 +89,10 @@ namespace D2RTools
 
         public void GetServerDetails()
         {
-            if (gameProcess == default)
+            for (var i = 0; i < gameProcess.Length; i++)
             {
-                gameProcess = GetProcess();
-                processCount = gameProcess.Length;
-            }
-            for (var i = 0; i < 8; i++)
-            {
-                if (i > processCount)
-                {
-                    SetDefaultTitle(i);
-                    ips[i] = "0.0.0.0";
-                }
-                else
-                {
-                    SetTitle(i);
-                    GetClientDetails(i);
-                }
+                SetTitle(i);
+                GetClientDetails(i);
             }
         }
 
@@ -289,6 +276,8 @@ namespace D2RTools
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
+            gameProcess = GetProcess();
+            processCount = gameProcess.Length;
             GetServerDetails();
         }
 
