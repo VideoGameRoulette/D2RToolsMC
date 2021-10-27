@@ -230,25 +230,28 @@ namespace D2RTools
             string[] args = SearchBar.Text.Split(',');
             if (args.Length > 1)
             {
-                if (i == args.Length)
+                for (var idx = 0; idx == args.Length; idx++)
                 {
-                    tb.Foreground = Brushes.Red;
-                    return;
-                }
-                if (args[i] == tb.Text)
-                {
-                    tb.Foreground = Brushes.Green;
-                    return;
+                    if (args.Contains(tb.Text))
+                    {
+                        tb.Foreground = Brushes.Green;
+                        return;
+                    }
+                    else
+                    {
+                        tb.Foreground = Brushes.Red;
+
+                    }
                 }
             }
             else
             {
-                if (SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && SearchBar.Text == CurrentIP.Text)
+                if (SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && SearchBar.Text.Contains(tb.Text))
                 {
                     tb.Foreground = Brushes.Green;
                     return;
                 }
-                else if (SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && SearchBar.Text != CurrentIP.Text)
+                else if (SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && !SearchBar.Text.Contains(tb.Text))
                 {
                     tb.Foreground = Brushes.Red;
                     return;
