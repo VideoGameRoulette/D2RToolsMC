@@ -227,15 +227,19 @@ namespace D2RTools
 
         private void SetTextColor(int i, System.Windows.Controls.TextBlock tb)
         {
-            if (SearchBar.Text.Contains(tb.Text))
+            string[] args = SearchBar.Text.Split(',');
+            for (var idx = 0; idx == args.Length; idx++)
             {
-                tb.Foreground = Brushes.Green;
-                return;
-            }
-            else
-            {
-                tb.Foreground = Brushes.Red;
-
+                if (idx == args.Length)
+                {
+                    tb.Foreground = Brushes.Red;
+                    return;
+                }
+                if (args[idx] == tb.Text)
+                {
+                    tb.Foreground = Brushes.Green;
+                    continue;
+                }
             }
         }
 
