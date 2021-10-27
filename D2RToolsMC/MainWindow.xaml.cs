@@ -227,42 +227,16 @@ namespace D2RTools
 
         private void SetTextColor(int i, System.Windows.Controls.TextBlock tb)
         {
-            string[] args = SearchBar.Text.Split(',');
-            if (args.Length > 1)
+            if (SearchBar.Text.Contains(tb.Text))
             {
-                for (var idx = 0; idx == args.Length; idx++)
-                {
-                    if (args.Contains(tb.Text))
-                    {
-                        tb.Foreground = Brushes.Green;
-                        return;
-                    }
-                    else
-                    {
-                        tb.Foreground = Brushes.Red;
-
-                    }
-                }
+                tb.Foreground = Brushes.Green;
+                return;
             }
             else
             {
-                if (SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && SearchBar.Text.Contains(tb.Text))
-                {
-                    tb.Foreground = Brushes.Green;
-                    return;
-                }
-                else if (SearchBar.Text != string.Empty && SearchBar.Text != "0.0.0.0" && !SearchBar.Text.Contains(tb.Text))
-                {
-                    tb.Foreground = Brushes.Red;
-                    return;
-                }
-                else
-                {
-                    tb.Foreground = Brushes.White;
-                    return;
-                }
+                tb.Foreground = Brushes.Red;
+
             }
-            
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)
