@@ -73,14 +73,14 @@ namespace D2RTools
         //public int currentTime;
 
         private string[] FilteredIP = {
-            "24.105.29.76", // GLOBAL??
-            "34.117.122.6", // GLOBAL??
-            "37.244.28.", // US
-            "37.244.54.", // US
+            "24.105.29.76", // GLOBAL
+            "34.117.122.6", // GLOBAL
+            "37.244.28.", // EU
+            "37.244.54.", // EU
             "117.52.35.", // ASIA
             "127.0.0.1", // LOCAL
-            "137.221.105.", // EU
-            "137.221.106." // EU
+            "137.221.105.", // NA
+            "137.221.106." // NA
         };
 
         private string[] ips = { "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0", "0.0.0.0" };
@@ -198,14 +198,15 @@ namespace D2RTools
                     {
                         if (line.Contains("ESTABLISHED"))
                         {
-                            if (!line.Contains(FilteredIP[0]) &&
-                                !line.Contains(FilteredIP[1]) &&
-                                !line.Contains(FilteredIP[2]) &&
-                                !line.Contains(FilteredIP[3]) &&
-                                !line.Contains(FilteredIP[4]) &&
-                                !line.Contains(FilteredIP[5]) &&
-                                !line.Contains(FilteredIP[6]) &&
-                                !line.Contains(FilteredIP[7]) &&
+                            var _currentIP = Regex.Split(line, ",").Last();
+                            if (!_currentIP.Contains(FilteredIP[0]) &&
+                                !_currentIP.Contains(FilteredIP[1]) &&
+                                !_currentIP.StartsWith(FilteredIP[2]) &&
+                                !_currentIP.StartsWith(FilteredIP[3]) &&
+                                !_currentIP.StartsWith(FilteredIP[4]) &&
+                                !_currentIP.Contains(FilteredIP[5]) &&
+                                !_currentIP.StartsWith(FilteredIP[6]) &&
+                                !_currentIP.StartsWith(FilteredIP[7]) &&
                                 line.Contains(gameProcess[i].Id.ToString()))
                             {
                                 IPList.Add(line);
